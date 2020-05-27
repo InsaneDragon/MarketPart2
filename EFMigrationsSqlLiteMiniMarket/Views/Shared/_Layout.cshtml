@@ -1,0 +1,48 @@
+﻿@using System.Collections.Generic;
+@using Microsoft.Data.Sqlite;
+@using Dapper; 
+@{List<Cattegories> CattegoriesList = new List<Cattegories>(); }
+@{
+    using (var context = new SqliteConnection("Data Source=myDB.db"))
+    {
+        CattegoriesList = context.Query<Cattegories>("select * from Cattegories").ToList();
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EFMigrationsSqlLiteMiniMarket</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">EFMigrationsSqlLiteMiniMarket</a>
+            <button class="btn dropdown-toggle dropdown-toggle-split" id="CattDropdown" data-toggle="dropdown">Категории</button>
+            <div style="width:100%" class="dropdown-menu" id="Cattegories-Menu">
+                @foreach (var item in CattegoriesList)
+                {
+                    <div style="height:22px;margin-top:20px" class="DropDownItems">
+                        <a style="" class="Cats" href="/Actions/Cattegories?id=@item.Id">@item.Name</a>
+                    </div>
+                }
+            </div>
+        </nav>
+    </header>
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - EFMigrationsSqlLiteMiniMarket - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
