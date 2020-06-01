@@ -1,4 +1,4 @@
-﻿@model List<ViewProduct>
+﻿@model List<Quote>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -63,10 +63,9 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Cattegory</th>
-                <th>Actions</th>
+                <th>Text</th>
+                <th>Author</th>
+                <th>InsertDate</th>
             </tr>
         </thead>
         <tbody id="TableBody">
@@ -74,9 +73,9 @@
             {
                 <tr id="@item.Id">
                     <td>@item.Id</td>
-                    <td id="Name_@item.Id">@item.Name</td>
-                    <td id="Price_@item.Id">@item.Price</td>
-                    <td id="Cattegory_@item.Id">@item.Cattegory</td>
+                    <td id="Text_@item.Id">@item.Text</td>
+                    <td id="Author_@item.Id">@item.Author</td>
+                    <td id="InsertDate_@item.Id">@item.InsertDate</td>
                     <td>
                         <button class="btn btn-primary" style="width:80px" data-target="#AddModal" data-toggle="modal" onclick="EditProduct(@item.Id)">Edit</button>
                         <button class="btn btn-danger" style="width:80px" onclick="DeleteProduct(@item.Id)">Delete</button>

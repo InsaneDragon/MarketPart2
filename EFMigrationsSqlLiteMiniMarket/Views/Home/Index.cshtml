@@ -1,65 +1,14 @@
-﻿@model List<ViewProduct>
-@{
-    ViewData["Title"] = "Home Page";
-}
-<head>
+﻿<head>
 </head>
 <body>
     <div>
         <script>
-            function AddPerson() {
-                let Name = $('#ProductName').val()
-                let Price = $('#Price').val();
-                let Cattegory = $('#Cattegories').val();
-                $.post("/Actions/AddProduct", { Name: Name, Price: Price, Cattegory: Cattegory })
+            $(document).ready(function () {
+                $.get("https://localhost:44327/crud/Read")
                     .done(function (data) {
-                        if (data != "Error" && data != "Please fill all fields") {
-                            $("#TableBody").append(`<tr id=${data.id}><td>${data.id}</td><td id=Name_${data.id}>${data.name}</td><td id=Price_${data.id}>${data.price}</td><td id=Cattegory_${data.id}>${data.cattegory}</td><td><button class="btn btn-primary" style="width:80px" data-target="#AddModal" data-toggle="modal" onclick="EditProduct(${data.id})">Edit</button> <button class="btn btn-danger" style="width:80px" onclick="DeleteProduct(${data.id})">Delete</button> </td></tr>`);
-                            $('#ProductName').val("")
-                            $('#Price').val("");
-                            $('#Cattegories').val("");
-                            alert("Product was added successfully");
-                        }
-                        else {
-                            alert(data);
-                        }
-                    });
-            }
-            function DeleteProduct(id) {
-                $.post("/Actions/DeleteProduct", { ID: id })
-                    .done(function (data) { $(`#${id}`).empty() })
-            }
-            function EditProduct(id) {
-                let Name = $(`#Name_${id}`).html();
-                let Price = $(`#Price_${id}`).html();
-                $('#ProductName').val(Name)
-                $('#Price').val(Price);
-                $('#Cattegories').val("selectedIndex", 0);
-                $('#SaveBtn').attr("onclick", `Edit(${id})`)
-                $('#SaveBtn').html("Сохранить");
-            }
-            function Edit(id) {
-                let Name = $('#ProductName').val()
-                let Price = $('#Price').val();
-                let Cattegory = $('#Cattegories').val();
-                let CattegoryText = $('#Cattegories option:selected').text();
-                $.post("/Actions/EditProduct", { ID: id, Name: Name, Price: Price, Cattegory: Cattegory })
-                    .done(function (data) {
-                        if (data == "OK") {
-                            $(`#Name_${id}`).html(Name);
-                            $(`#Price_${id}`).html(Price);
-                            $(`#Cattegory_${id}`).html(CattegoryText);
-                            alert("Product was edited successfully");
-                        }
-                        else {
-                            alert("Please fill all fields");
-                        }
+                        debugger;
                     })
-            }
-            function Close() {
-                $('#SaveBtn').attr("onclick", "AddPerson()")
-                $('#SaveBtn').html("Добавить");
-            }
+            })
         </script>
     </div>
     <table class="table text-center">

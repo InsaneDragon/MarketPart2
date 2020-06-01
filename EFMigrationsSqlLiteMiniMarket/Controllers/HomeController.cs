@@ -17,14 +17,7 @@ namespace EFMigrationsSqlLiteMiniMarket.Controllers
     {
         public IActionResult Index()
         {
-            using (var context = new SqliteConnection("Data Source=myDB.db"))
-            {
-                var Cattegories = context.Query<Cattegories>("select * from Cattegories").ToList();
-                ViewBag.Cattegories = new SelectList(Cattegories.ToList(), "Id", "Name").ToList() ;
-                var Products = from item in context.Query<Product>("select * from Products")
-                               select new ViewProduct { Cattegory = Cattegories.Where(x => x.Id == item.Cattegory).FirstOrDefault().Name, Name = item.Name, Id = item.Id, Price = item.Price };
-                return View(Products.ToList());
-            }
+            return View();
         }
     }
 }
